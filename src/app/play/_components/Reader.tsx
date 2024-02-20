@@ -20,12 +20,16 @@ export default function Reader() {
 	});
 
 	return (
-		<>
+		<div
+			onClick={() => {
+				playTrack(result);
+			}}
+		>
 			<video ref={ref} />
 			<p>
 				<span>Last result:</span>
 				<span>{result}</span>
 			</p>
-		</>
+		</div>
 	);
 }
