@@ -22,7 +22,11 @@ export default function Reader() {
 	return (
 		<div
 			onClick={() => {
-				playTrack(result);
+				try {
+					playTrack(result);
+				} catch (error) {
+					alert(error);
+				}
 			}}
 		>
 			<video ref={ref} />
