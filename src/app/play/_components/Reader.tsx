@@ -25,7 +25,6 @@ export default function Reader() {
 			<p>
 				<span>Last result:</span>
 				<span>{result}</span>
-				<button onClick={() => playTrack(result)}>Play</button>
 			</p>
 		</>
 	);
