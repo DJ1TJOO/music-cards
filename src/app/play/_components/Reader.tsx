@@ -28,6 +28,7 @@ export default function Reader() {
 				<button
 					onClick={() => {
 						try {
+							alert(result);
 							playTrack(result);
 						} catch (error) {
 							alert(error);
