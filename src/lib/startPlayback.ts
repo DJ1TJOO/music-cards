@@ -13,6 +13,8 @@ async function startPlayback(
 		}),
 	});
 
+	console.log("play", response.status, response.statusText, uris);
+
 	return response.ok;
 }
 

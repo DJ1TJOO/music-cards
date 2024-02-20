@@ -25,18 +25,7 @@ export default function Reader() {
 			<p>
 				<span>Last result:</span>
 				<span>{result}</span>
-				<button
-					onClick={() => {
-						try {
-							alert(result);
-							playTrack(result);
-						} catch (error) {
-							alert(error);
-						}
-					}}
-				>
-					Play
-				</button>
+				<button onClick={() => playTrack(result)}>Play</button>
 			</p>
 		</>
 	);
