@@ -12,8 +12,10 @@ const constraints: MediaStreamConstraints = {
 export default function Reader() {
 	const [result, setResult] = useState("");
 	const { ref } = useZxing({
-		onDecodeResult(result) {
-			const value = result.getText();
+		onDecodeResult(data) {
+			const value = data.getText();
+			if (result === value) return;
+
 			playUri(value);
 			setResult(value);
 		},

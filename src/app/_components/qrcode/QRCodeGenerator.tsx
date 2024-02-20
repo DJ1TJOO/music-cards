@@ -1,16 +1,20 @@
 "use client";
 import React, { useState } from "react";
 import QRCode from "qrcode";
-import { parseSpotifyUri } from "./parseSpotifyUri";
+import { formatURI } from "@/spotify-uri";
 
 export default function QRCodeGenerator() {
 	const [uri, setURI] = useState("");
 	const [src, setSrc] = useState("");
 
 	const generateQRCode = async () => {
-		if (uri.length > 0)
-			QRCode.toDataURL(await parseSpotifyUri(uri)).then(setSrc);
-		else setSrc("");
+		try {
+			if (uri.length > 0) {
+				QRCode.toDataURL(formatURI(uri)).then(setSrc);
+			} else setSrc("");
+		} catch (error) {
+			setSrc("");
+		}
 	};
 
 	return (
