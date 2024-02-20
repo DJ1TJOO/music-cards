@@ -15,8 +15,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-media-devices": "^1.1.5",
-    "react-zxing": "^2.0.0",
-    "spotify-uri": "^4.0.1"
+    "react-zxing": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
