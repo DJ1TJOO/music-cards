@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useMediaDevices } from "react-media-devices";
 import { useZxing } from "react-zxing";
-import playTrack from "./playTrack";
+import playUri from "./playTrack";
 
 const constraints: MediaStreamConstraints = {
 	video: true,
@@ -14,7 +14,7 @@ export default function Reader() {
 	const { ref } = useZxing({
 		onDecodeResult(result) {
 			const value = result.getText();
-			playTrack(value);
+			playUri(value);
 			setResult(value);
 		},
 	});
