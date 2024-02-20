@@ -20,20 +20,23 @@ export default function Reader() {
 	});
 
 	return (
-		<div
-			onClick={() => {
-				try {
-					playTrack(result);
-				} catch (error) {
-					alert(error);
-				}
-			}}
-		>
+		<>
 			<video ref={ref} />
 			<p>
 				<span>Last result:</span>
 				<span>{result}</span>
+				<button
+					onClick={() => {
+						try {
+							playTrack(result);
+						} catch (error) {
+							alert(error);
+						}
+					}}
+				>
+					Play
+				</button>
 			</p>
-		</div>
+		</>
 	);
 }
