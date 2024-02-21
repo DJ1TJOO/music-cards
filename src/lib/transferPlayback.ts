@@ -23,7 +23,10 @@ export default transferPlayback;
 export async function ensureDevice(accessToken: string) {
 	const devices = await getDevices(accessToken);
 	const anyActive = devices.some((device) => device.is_active);
-	if (!anyActive && devices.length > 0) {
-		await transferPlayback(accessToken, [devices[0].id]);
+	if (!anyActive) {
+		if (devices.length === 0) return false;
+		return await transferPlayback(accessToken, [devices[0].id]);
 	}
+
+	return true;
 }

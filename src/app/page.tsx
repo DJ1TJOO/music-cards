@@ -3,6 +3,7 @@ import getAccessToken from "@/lib/getAccessToken";
 import Reader from "./_components/scan/Reader";
 import TrackCardFront from "./_components/TrackCardFront";
 import Link from "next/link";
+import RefreshButton from "./_components/RefreshButton";
 export default async function Home({
 	searchParams,
 }: {
@@ -10,7 +11,17 @@ export default async function Home({
 }) {
 	const accessToken = await getAccessToken();
 	// TODO: change this
-	await ensureDevice(accessToken);
+	if (!(await ensureDevice(accessToken))) {
+		return (
+			<main className="w-full h-screen flex items-center py-32 flex-col gap-8">
+				<p className="text-white bg-black rounded-3xl p-4 max-w-sm text-center">
+					Could not find any active devices, please activate an device
+					by opening/playing in the spotify app or web player.
+				</p>
+				<RefreshButton />
+			</main>
+		);
+	}
 
 	const playing = searchParams?.playing;
 	const isPlaying = typeof playing === "string";
