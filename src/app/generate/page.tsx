@@ -9,13 +9,21 @@ export default async function Generate({
 }) {
 	const playlistUrl = searchParams?.playlistUrl;
 	const hasPlaylist = typeof playlistUrl === "string";
+	const seed = searchParams?.seed;
+	const hasSeed = typeof seed === "string";
 
 	return (
 		<main className="w-full flex items-center py-32 flex-col gap-8">
 			<PlaylistInput />
-			{hasPlaylist ? (
+			{hasPlaylist && hasSeed ? (
 				<Playlist
 					playlistUrl={playlistUrl}
+					seed={seed}
+					showing={
+						typeof searchParams?.showing === "string"
+							? searchParams.showing
+							: null
+					}
 					style={
 						searchParams?.style === "wave"
 							? "wave"

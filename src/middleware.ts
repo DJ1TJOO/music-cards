@@ -8,14 +8,23 @@ export function middleware(request: NextRequest) {
 	const token = cookies().get("guess_song_token");
 	if (token === undefined) {
 		if (
-			request.nextUrl.pathname !== "/auth/login" &&
-			request.nextUrl.pathname !== "/auth/callback"
+			url.pathname !== "/auth/login" &&
+			url.pathname !== "/auth/callback"
 		) {
 			url.pathname = "/auth/login";
 			return NextResponse.redirect(url);
 		}
-	} else if (request.nextUrl.pathname === "/auth/login") {
+	} else if (url.pathname === "/auth/login") {
 		url.pathname = "/";
+		return NextResponse.redirect(url);
+	}
+
+	if (url.pathname === "/generate" && !url.searchParams.has("seed")) {
+		url.searchParams.set(
+			"seed",
+			Math.floor(100000 + Math.random() * 900000).toString()
+		);
+
 		return NextResponse.redirect(url);
 	}
 
