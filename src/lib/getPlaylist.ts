@@ -88,7 +88,7 @@ type Track = {
 	is_local: boolean;
 	track: {
 		album: Album;
-		artists: Artist[];
+		artists: SimplyfiedArtist[];
 		available_markets: string[];
 		disc_number: number;
 		duration_ms: number;

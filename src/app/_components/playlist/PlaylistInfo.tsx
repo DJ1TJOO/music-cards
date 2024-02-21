@@ -17,6 +17,7 @@ export default function PlaylistInfo({ accessToken }: { accessToken: string }) {
 
 	const getInfo = async () => {
 		const playlist = await getPlaylist(accessToken, parse(uri).id);
+
 		const tracks = await Promise.all(
 			playlist.tracks.items.map(async (track) => ({
 				qr: await QRCode.toDataURL(track.track.uri),
