@@ -5,6 +5,7 @@ async function getPlaybackStatus(accessToken: string): Promise<boolean> {
 		},
 		next: {
 			tags: ["playback-status"],
+			revalidate: 10,
 		},
 	});
 
