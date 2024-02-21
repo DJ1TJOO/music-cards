@@ -6,9 +6,9 @@ import React, { PropsWithChildren } from "react";
 
 export default function TrackButton({
 	children,
-	url,
+	uri,
 	show,
-}: PropsWithChildren<{ url: string; show: boolean }>) {
+}: PropsWithChildren<{ uri: string; show: boolean }>) {
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 
@@ -18,7 +18,7 @@ export default function TrackButton({
 		if (show) {
 			current.delete("showing");
 		} else {
-			current.set("showing", url);
+			current.set("showing", uri);
 		}
 
 		const search = current.toString();

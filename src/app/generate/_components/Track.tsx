@@ -4,13 +4,13 @@ import React from "react";
 import TrackButton from "./TrackButton";
 
 export default function Track({
-	track: { url, name, artistNames, year },
+	track: { uri, name, artistNames, year },
 	style,
 	light,
 	show,
 }: {
 	track: {
-		url: string;
+		uri: string;
 		name: string;
 		artistNames: string[];
 		year: number;
@@ -20,7 +20,7 @@ export default function Track({
 	show: boolean;
 }) {
 	return (
-		<TrackButton url={url} show={show}>
+		<TrackButton uri={uri} show={show}>
 			<div className="flex gap-2 h-56">
 				{show ? (
 					<TrackCardBack
@@ -30,7 +30,7 @@ export default function Track({
 						light={light}
 					/>
 				) : (
-					<TrackCardFront url={url} style={style} light={light} />
+					<TrackCardFront uri={uri} style={style} light={light} />
 				)}
 			</div>
 		</TrackButton>

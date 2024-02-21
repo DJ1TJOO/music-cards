@@ -24,7 +24,7 @@ export default async function Playlist({
 		playList.tracks.items
 			.sort(() => 0.5 - random()) // This is pseudo-random, but fine for this use case
 			.map(async (track) => ({
-				url: track.track.href,
+				uri: track.track.uri,
 				name: track.track.name,
 				artistNames: track.track.artists.map((artist) => artist.name),
 				year: new Date(track.track.album.release_date).getFullYear(),
@@ -39,7 +39,7 @@ export default async function Playlist({
 					track={track}
 					style={style}
 					light={light}
-					show={track.url === showing}
+					show={track.uri === showing}
 				/>
 			))}
 		</div>

@@ -23,7 +23,7 @@ export default async function Home({
 				<div className="flex flex-col gap-4">
 					<div className="h-72 w-72">
 						<TrackCardFront
-							url={playing}
+							uri={playing}
 							style={
 								searchParams?.style === "wave"
 									? "wave"
