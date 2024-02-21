@@ -32,7 +32,10 @@ export default async function Playlist({
 	);
 
 	return (
-		<div className="flex flex-col gap-8">
+		<div className="flex flex-col items-center gap-8">
+			<p className="text-xs font-semibold text-white">
+				Click to see year, name and artist
+			</p>
 			{tracks.map((track, i) => (
 				<Track
 					key={i}
