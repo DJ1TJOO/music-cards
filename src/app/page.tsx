@@ -18,7 +18,15 @@ export default async function Home({
 	return (
 		<main className="w-full h-screen flex items-center py-32 flex-col gap-8">
 			{!isPlaying ? (
-				<Reader />
+				<div className="flex flex-col gap-4">
+					<Reader />
+					<Link
+						href={"/generate"}
+						className="rounded-full px-4 py-2 font-semibold uppercase bg-green text-center"
+					>
+						generate
+					</Link>
+				</div>
 			) : (
 				<div className="flex flex-col gap-4">
 					<div className="h-72 w-72">
