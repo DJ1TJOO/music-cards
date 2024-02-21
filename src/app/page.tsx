@@ -13,7 +13,7 @@ export default async function Home({
 	// TODO: change this
 	if (!(await ensureDevice(accessToken))) {
 		return (
-			<main className="w-full h-screen flex items-center py-32 flex-col gap-8">
+			<main className="w-full h-screen flex items-center py-32 px-4 flex-col gap-8">
 				<p className="text-white bg-black rounded-3xl p-4 max-w-sm text-center">
 					Could not find any active devices, please activate an device
 					by opening/playing in the spotify app or web player.
@@ -27,7 +27,7 @@ export default async function Home({
 	const isPlaying = typeof playing === "string";
 
 	return (
-		<main className="w-full h-screen flex items-center py-32 flex-col gap-8">
+		<main className="w-full h-screen flex items-center py-32 px-4 flex-col gap-8">
 			{!isPlaying ? (
 				<div className="flex flex-col gap-4">
 					<Reader />

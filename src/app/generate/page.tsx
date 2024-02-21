@@ -13,7 +13,7 @@ export default async function Generate({
 	const hasSeed = typeof seed === "string";
 
 	return (
-		<main className="w-full flex items-center py-32 flex-col gap-8">
+		<main className="w-full flex items-center py-32 px-4 flex-col gap-8">
 			<PlaylistInput />
 			{hasPlaylist && hasSeed ? (
 				<Playlist
