@@ -3,6 +3,7 @@ import React from "react";
 import { useZxing } from "react-zxing";
 import playUri from "./playTrack";
 import { useRouter, useSearchParams } from "next/navigation";
+import { formatURI } from "@/spotify-uri";
 
 export default function Reader() {
 	const router = useRouter();
@@ -14,7 +15,7 @@ export default function Reader() {
 			const value = data.getText();
 			if (playing === value) return;
 
-			playUri(value);
+			playUri(formatURI(value));
 			router.replace(`/?playing=${value}`);
 		},
 	});

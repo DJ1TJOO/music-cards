@@ -3,15 +3,15 @@ import React from "react";
 import QRCode from "qrcode";
 
 export default async function TrackCardFront({
-	uri,
+	url,
 	style,
 	light,
 }: {
-	uri: string;
+	url: string;
 	style: "wave" | "checkered";
 	light: boolean;
 }) {
-	const src = await QRCode.toDataURL(uri, {
+	const src = await QRCode.toDataURL(url, {
 		color: {
 			dark: light ? "#000" : "#fff",
 			light: light ? "#fff" : "#000",

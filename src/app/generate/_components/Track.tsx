@@ -3,14 +3,14 @@ import TrackCardFront from "@/app/_components/TrackCardFront";
 import React from "react";
 
 export default function Track({
-	uri,
+	url,
 	name,
 	artistNames,
 	year,
 	style,
 	light,
 }: {
-	uri: string;
+	url: string;
 	name: string;
 	artistNames: string[];
 	year: number;
@@ -19,7 +19,7 @@ export default function Track({
 }) {
 	return (
 		<div className="flex gap-2 h-56">
-			<TrackCardFront uri={uri} style={style} light={light} />
+			<TrackCardFront url={url} style={style} light={light} />
 			<TrackCardBack
 				name={name}
 				artistNames={artistNames}

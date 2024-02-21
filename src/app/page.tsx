@@ -1,6 +1,5 @@
 import { ensureDevice } from "@/lib/transferPlayback";
 import getAccessToken from "@/lib/getAccessToken";
-import Playback from "./_components/playback/Playback";
 import Reader from "./_components/scan/Reader";
 import TrackCardFront from "./_components/TrackCardFront";
 import Link from "next/link";
@@ -24,7 +23,7 @@ export default async function Home({
 				<div className="flex flex-col gap-4">
 					<div className="h-72 w-72">
 						<TrackCardFront
-							uri={playing}
+							url={playing}
 							style={
 								searchParams?.style === "wave"
 									? "wave"
