@@ -1,5 +1,5 @@
 import { dark as spotifyDark, light as spotifyLight } from "@/spotify_logo";
-import { loadImage, createCanvas } from "canvas";
+import { createCanvas, loadImage } from "@napi-rs/canvas";
 import qrcode from "qrcode";
 
 export async function generateQRCode(
