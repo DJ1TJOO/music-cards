@@ -28,17 +28,25 @@ export default function Print({
 
 		const bounds = input.getBoundingClientRect();
 		domToImage
-			.toPng(input, { width: bounds.width, height: bounds.height })
+			.toPng(input, {
+				width: bounds.width * 2,
+				height: bounds.height * 2,
+				style: {
+					transform: "scale(2)",
+					transformOrigin: "top left",
+				},
+			})
 			.then((imgData) => {
 				const pdf = new jsPDF({
 					unit: "px",
 					format: "a4",
-					userUnit: 300,
+					userUnit: 72,
 				});
 				const pageHeight = pdf.internal.pageSize.getHeight();
 
 				const imgProps = pdf.getImageProperties(imgData);
 				const imgWidth = pdf.internal.pageSize.getWidth();
+
 				const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
 				let heightLeft = imgHeight;
 				let position = 0;
@@ -72,7 +80,7 @@ export default function Print({
 			>
 				Print
 			</button>
-			<div className="absolute translate-x-full translate-y-full">
+			<div className="absolute -translate-x-full -translate-y-full">
 				<div id="divToPrint" className="w-[595px] flex flex-col gap-0">
 					{tracks
 						.reduce((prev, curr) => {
@@ -93,7 +101,7 @@ export default function Print({
 						.map((tracks) => (
 							<div
 								key={tracks.map((x) => x.uri).join("-")}
-								className="flex-wrap flex justify-center items-center gap-2 p-[16px] h-[841px]"
+								className="flex-wrap flex justify-center items-center gap-2 p-[16px] h-[842px]"
 							>
 								{tracks.map((track) => (
 									<div
