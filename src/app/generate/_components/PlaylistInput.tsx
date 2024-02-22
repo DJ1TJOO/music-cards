@@ -12,7 +12,7 @@ export default function PlaylistInput() {
 	const [valid, setValid] = useState(true);
 
 	return (
-		<div className="flex flex-col gap-2 max-w-xs">
+		<div className="flex flex-col gap-2 max-w-xs w-full">
 			<input
 				type="text"
 				className={`rounded-full bg-black focus:outline-none ring-2 px-4 py-2 ${

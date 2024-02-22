@@ -15,11 +15,15 @@ export default function TrackCardBack({
 		<div
 			className={`${
 				light ? "bg-white text-black" : "bg-black text-white"
-			} flex items-center justify-between h-full flex-col aspect-square p-6 text-center`}
+			} flex items-center justify-between h-full flex-col aspect-square p-6 relative text-center`}
 		>
-			<p className="text-xs font-semibold">{artistNames.join(", ")}</p>
-			<p className="font-bold text-3xl">{year}</p>
-			<p className="italic text-xs">{name}</p>
+			<p className="text-xs font-semibold line-clamp-3 px-0.5">
+				{artistNames.join(", ")}
+			</p>
+			<p className="font-bold text-3xl absolute top-1/2 -translate-y-1/2">
+				{year}
+			</p>
+			<p className="italic text-xs line-clamp-3 px-0.5">{name}</p>
 		</div>
 	);
 }

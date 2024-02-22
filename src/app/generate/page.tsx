@@ -1,6 +1,7 @@
 import React from "react";
 import PlaylistInput from "./_components/PlaylistInput";
 import Playlist from "./_components/Playlist";
+import Print from "./_components/Print";
 
 export default async function Generate({
 	searchParams,
@@ -13,7 +14,7 @@ export default async function Generate({
 	const hasSeed = typeof seed === "string";
 
 	return (
-		<main className="w-full flex items-center py-32 px-4 flex-col gap-8">
+		<main className="w-full flex items-center py-32 px-4 flex-col gap-2">
 			<PlaylistInput />
 			{hasPlaylist && hasSeed ? (
 				<Playlist

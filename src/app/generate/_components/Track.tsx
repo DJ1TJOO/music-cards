@@ -4,7 +4,7 @@ import React from "react";
 import TrackButton from "./TrackButton";
 
 export default function Track({
-	track: { uri, name, artistNames, year },
+	track: { uri, name, artistNames, year, qrDataUrl },
 	style,
 	light,
 	show,
@@ -14,6 +14,7 @@ export default function Track({
 		name: string;
 		artistNames: string[];
 		year: number;
+		qrDataUrl: string;
 	};
 	style: "wave" | "checkered";
 	light: boolean;
@@ -30,7 +31,11 @@ export default function Track({
 						light={light}
 					/>
 				) : (
-					<TrackCardFront uri={uri} style={style} light={light} />
+					<TrackCardFront
+						qrDataUrl={qrDataUrl}
+						style={style}
+						light={light}
+					/>
 				)}
 			</div>
 		</TrackButton>

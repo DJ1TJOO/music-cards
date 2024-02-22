@@ -3,6 +3,8 @@ import getPlaylist from "@/lib/getPlaylist";
 import { parse } from "@/spotify-uri";
 import Track from "./Track";
 import seedrandom from "seedrandom";
+import Print from "./Print";
+import { generateQRCode } from "@/lib/generateQRCode";
 
 export default async function Playlist({
 	playlistUrl,
@@ -28,12 +30,15 @@ export default async function Playlist({
 				name: track.track.name,
 				artistNames: track.track.artists.map((artist) => artist.name),
 				year: new Date(track.track.album.release_date).getFullYear(),
+				qrDataUrl: await generateQRCode(track.track.uri, light),
 			}))
 	);
 
 	return (
-		<div className="flex flex-col items-center gap-8">
-			<p className="text-xs font-semibold text-white">
+		<div className="flex flex-col items-center gap-8 max-w-xs w-full">
+			<Print tracks={tracks} style={style} light={light} />
+
+			<p className="text-xs font-semibold">
 				Click to see year, name and artist
 			</p>
 			{tracks.map((track, i) => (

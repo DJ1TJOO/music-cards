@@ -4,6 +4,7 @@ import Reader from "./_components/scan/Reader";
 import TrackCardFront from "./_components/TrackCardFront";
 import Link from "next/link";
 import RefreshButton from "./_components/RefreshButton";
+import { generateQRCode } from "@/lib/generateQRCode";
 export default async function Home({
 	searchParams,
 }: {
@@ -42,7 +43,10 @@ export default async function Home({
 				<div className="flex flex-col gap-4">
 					<div className="h-72 w-72">
 						<TrackCardFront
-							uri={playing}
+							qrDataUrl={await generateQRCode(
+								playing,
+								typeof searchParams?.light !== "undefined"
+							)}
 							style={
 								searchParams?.style === "wave"
 									? "wave"
