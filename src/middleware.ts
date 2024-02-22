@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
 	const url = request.nextUrl;
 	const response = NextResponse.next();
 
-	const token = cookies().get("guess_song_token");
+	const token = cookies().get("music_cards_token");
 	if (token === undefined) {
 		if (
 			url.pathname !== "/auth/login" &&

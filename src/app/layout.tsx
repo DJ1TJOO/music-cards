@@ -5,8 +5,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Guess Song",
-	description: "Guess the song from a qr code from spotify",
+	title: "Music Cards",
+	description:
+		"Create music cards from your Spotify library, with the year, name and artist of the song",
 };
 
 export default function RootLayout({

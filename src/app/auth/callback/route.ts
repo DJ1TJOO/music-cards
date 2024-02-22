@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
 
 	// @TODO: do not store this data in cookie
 	const response = NextResponse.redirect(new URL("/", request.url));
-	response.cookies.set("guess_song_token", access_token, {
+	response.cookies.set("music_cards_token", access_token, {
 		expires: new Date(Date.now() + 1000 * expires_in),
 	});
 	return response;
