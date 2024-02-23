@@ -15,8 +15,11 @@ export default function Reader() {
 			const value = data.getText();
 			if (playing === value) return;
 
-			playUri(formatURI(value));
-			router.replace(`/?playing=${value}`);
+			try {
+				const uri = formatURI(value);
+				playUri(uri);
+				router.replace(`/?playing=${value}`);
+			} catch (error) {}
 		},
 	});
 
