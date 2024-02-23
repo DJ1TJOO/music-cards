@@ -9,13 +9,13 @@ import { generateQRCode } from "@/lib/generateQRCode";
 export default async function Playlist({
 	playlistUrl,
 	showing,
-	style,
+	pattern,
 	light,
 	seed,
 }: {
 	playlistUrl: string;
 	showing: string | null;
-	style: "wave" | "checkered";
+	pattern: "wave" | "checkered";
 	light: boolean;
 	seed: string;
 }) {
@@ -36,7 +36,7 @@ export default async function Playlist({
 
 	return (
 		<div className="flex flex-col items-center gap-8 max-w-xs w-full">
-			<Print tracks={tracks} style={style} light={light} />
+			<Print tracks={tracks} pattern={pattern} light={light} />
 			<p className="text-white w-full bg-black rounded-3xl p-4 max-w-sm text-center">
 				Preview how the cards will look, click print when you are happy
 				with the result.
@@ -49,7 +49,7 @@ export default async function Playlist({
 				<Track
 					key={i}
 					track={track}
-					style={style}
+					pattern={pattern}
 					light={light}
 					show={track.uri === showing}
 				/>

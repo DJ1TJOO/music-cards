@@ -8,7 +8,7 @@ import React from "react";
 
 export default function Print({
 	tracks,
-	style,
+	pattern,
 	light,
 }: {
 	tracks: {
@@ -19,7 +19,7 @@ export default function Print({
 		qrDataUrl: string;
 	}[];
 	light: boolean;
-	style: "wave" | "checkered";
+	pattern: "wave" | "checkered";
 }) {
 	const printDocument = () => {
 		const input = document.getElementById("divToPrint");
@@ -118,7 +118,7 @@ export default function Print({
 										<div className="rotate-180">
 											<TrackCardFront
 												qrDataUrl={track.qrDataUrl}
-												style={style}
+												pattern={pattern}
 												light={light}
 											/>
 										</div>

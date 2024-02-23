@@ -5,7 +5,7 @@ import TrackButton from "./TrackButton";
 
 export default function Track({
 	track: { uri, name, artistNames, year, qrDataUrl },
-	style,
+	pattern,
 	light,
 	show,
 }: {
@@ -16,7 +16,7 @@ export default function Track({
 		year: number;
 		qrDataUrl: string;
 	};
-	style: "wave" | "checkered";
+	pattern: "wave" | "checkered";
 	light: boolean;
 	show: boolean;
 }) {
@@ -33,7 +33,7 @@ export default function Track({
 				) : (
 					<TrackCardFront
 						qrDataUrl={qrDataUrl}
-						style={style}
+						pattern={pattern}
 						light={light}
 					/>
 				)}

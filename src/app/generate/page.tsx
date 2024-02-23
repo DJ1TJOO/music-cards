@@ -32,10 +32,10 @@ export default async function Generate({
 							? searchParams.showing
 							: null
 					}
-					style={
-						searchParams?.style === "wave"
+					pattern={
+						searchParams?.pattern === "wave"
 							? "wave"
-							: searchParams?.style === "checkered"
+							: searchParams?.pattern === "checkered"
 							? "checkered"
 							: "wave"
 					}

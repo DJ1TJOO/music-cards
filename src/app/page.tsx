@@ -52,10 +52,10 @@ export default async function Home({
 					<div className="h-72 w-72">
 						<TrackCardFront
 							qrDataUrl={await generateQRCode(playing, light)}
-							style={
-								searchParams?.style === "wave"
+							pattern={
+								searchParams?.pattern === "wave"
 									? "wave"
-									: searchParams?.style === "checkered"
+									: searchParams?.pattern === "checkered"
 									? "checkered"
 									: "wave"
 							}

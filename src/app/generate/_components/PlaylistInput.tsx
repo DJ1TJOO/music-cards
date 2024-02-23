@@ -9,8 +9,16 @@ export default function PlaylistInput() {
 	const [playlistURL, setPlaylistURL] = useState(
 		searchParams.get("playlistUrl") ?? ""
 	);
-	const [pattern, setPattern] = useState("select");
-	const [mode, setMode] = useState("select");
+	const [pattern, setPattern] = useState(
+		searchParams.get("pattern") ?? "select"
+	);
+	const [mode, setMode] = useState(
+		searchParams.has("light")
+			? searchParams.get("light") === "true"
+				? "light"
+				: "dark"
+			: "select"
+	);
 
 	const [invalid, setInvalid] = useState<string | null>(null);
 
@@ -86,7 +94,7 @@ export default function PlaylistInput() {
 						router.push(
 							`/generate?playlistUrl=${formatURI(
 								parsedPlaylist
-							)}&style=${pattern}&light=${mode === "light"}`
+							)}&pattern=${pattern}&light=${mode === "light"}`
 						);
 					} catch (error) {
 						if (error instanceof Error) {
