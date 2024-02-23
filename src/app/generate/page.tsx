@@ -2,6 +2,7 @@ import React from "react";
 import PlaylistInput from "./_components/PlaylistInput";
 import Playlist from "./_components/Playlist";
 import Print from "./_components/Print";
+import Link from "next/link";
 
 export default async function Generate({
 	searchParams,
@@ -15,6 +16,12 @@ export default async function Generate({
 
 	return (
 		<main className="w-full flex items-center py-32 px-4 flex-col gap-2">
+			<Link
+				href={"/"}
+				className="max-w-xs w-full rounded-full px-4 py-2 font-semibold uppercase text-center mb-8 bg-green"
+			>
+				Back
+			</Link>
 			<PlaylistInput />
 			{hasPlaylist && hasSeed ? (
 				<Playlist
