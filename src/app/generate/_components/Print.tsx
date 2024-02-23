@@ -36,7 +36,13 @@ export default function Print({
 					transformOrigin: "top left",
 				},
 			})
-			.then((imgData) => {
+			.then(async (imgData) => {
+				await new Promise<void>((resolve) => {
+					const img = new Image();
+					img.src = imgData;
+					img.onload = () => resolve();
+				});
+
 				const pdf = new jsPDF({
 					unit: "px",
 					format: "a4",
