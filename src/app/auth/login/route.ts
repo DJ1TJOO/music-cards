@@ -4,7 +4,11 @@ import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 import { encode } from "querystring";
 
-const SCOPES = ["user-modify-playback-state", "user-read-playback-state"];
+const SCOPES = [
+	"user-modify-playback-state",
+	"user-read-playback-state",
+	"playlist-read-private",
+];
 
 export async function GET(request: NextRequest) {
 	const searchParams = request.nextUrl.searchParams;
