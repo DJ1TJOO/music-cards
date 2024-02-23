@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,11 +13,11 @@ export async function GET(request: NextRequest) {
 	const searchParams = request.nextUrl.searchParams;
 	const code = searchParams.get("code");
 	const state = searchParams.get("state");
+	const stateCookie = cookies().get("spotify_auth_state");
+	const to = cookies().get("spotify_auth_to")?.value;
 
-	// @TODO: compare state to send login request
-	if (state === null || code === null) {
-		// @TODO: handle error
-		redirect("/#");
+	if (state === null || state !== stateCookie?.value || code === null) {
+		redirect("/404");
 	}
 
 	const getToken = await fetch("https://accounts.spotify.com/api/token", {
@@ -38,8 +39,13 @@ export async function GET(request: NextRequest) {
 
 	const { access_token, expires_in } = await getToken.json();
 
+	const url = new URL(to ?? "/");
+	request.nextUrl.pathname = url.pathname;
+	request.nextUrl.search = url.search;
+
+	const response = NextResponse.redirect(request.nextUrl);
+
 	// @TODO: do not store this data in cookie
-	const response = NextResponse.redirect(new URL("/", request.url));
 	response.cookies.set("music_cards_token", access_token, {
 		expires: new Date(Date.now() + 1000 * expires_in),
 	});

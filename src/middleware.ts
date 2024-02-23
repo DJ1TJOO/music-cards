@@ -11,6 +11,7 @@ export function middleware(request: NextRequest) {
 			url.pathname !== "/auth/login" &&
 			url.pathname !== "/auth/callback"
 		) {
+			url.searchParams.set("to", url.href);
 			url.pathname = "/auth/login";
 			return NextResponse.redirect(url);
 		}
