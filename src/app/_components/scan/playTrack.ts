@@ -3,18 +3,7 @@ import startPlayback from "@/lib/startPlayback";
 import { SpotifyTypes } from "@/spotify-uri/types-enum";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-
-export function isContextUri(uri: string) {
-	return (
-		uri.includes(SpotifyTypes.Album) ||
-		uri.includes(SpotifyTypes.Playlist) ||
-		uri.includes(SpotifyTypes.Artist)
-	);
-}
-
-export function isUri(uri: string) {
-	return uri.includes(SpotifyTypes.Track);
-}
+import { isContextUri, isUri } from "./trackHelpers";
 
 async function playUri(uri: string) {
 	const accessToken = cookies().get("music_cards_token")?.value;
