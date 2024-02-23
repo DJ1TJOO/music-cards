@@ -80,7 +80,7 @@ export default function Print({
 			>
 				Print
 			</button>
-			<div className="absolute -translate-x-full -translate-y-full">
+			<div className="absolute -translate-x-[200%] -translate-y-[200%]">
 				<div id="divToPrint" className="w-[595px] flex flex-col gap-0">
 					{tracks
 						.reduce((prev, curr) => {

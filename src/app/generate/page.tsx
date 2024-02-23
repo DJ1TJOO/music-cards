@@ -15,10 +15,10 @@ export default async function Generate({
 	const hasSeed = typeof seed === "string";
 
 	return (
-		<main className="w-full flex items-center py-32 px-4 flex-col gap-2">
+		<main className="w-full flex items-center pb-32 pt-8 px-4 flex-col gap-2">
 			<Link
 				href={"/"}
-				className="max-w-xs w-full rounded-full px-4 py-2 font-semibold uppercase text-center mb-8 bg-green"
+				className="max-w-xs w-full rounded-full px-4 py-2 font-semibold uppercase text-center mb-32 bg-green"
 			>
 				Back
 			</Link>
@@ -39,7 +39,10 @@ export default async function Generate({
 							? "checkered"
 							: "wave"
 					}
-					light={typeof searchParams?.light !== "undefined"}
+					light={
+						typeof searchParams?.light !== "undefined" &&
+						searchParams.light === "true"
+					}
 				/>
 			) : null}
 		</main>

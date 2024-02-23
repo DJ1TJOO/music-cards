@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Montserrat_Alternates } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const montserratAlternates = Montserrat_Alternates({
+	subsets: ["latin"],
+	weight: ["900"],
+	variable: "--font-montserrat-alternates",
+});
 
 export const metadata: Metadata = {
 	title: "Music Cards",
@@ -18,7 +23,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${inter.className} min-h-screen bg-gradient-to-b from-cyan-300 to-blue-600`}
+				className={`${inter.className} ${montserratAlternates.variable} min-h-screen bg-gradient-to-b from-cyan-300 to-blue-600`}
 			>
 				{children}
 			</body>

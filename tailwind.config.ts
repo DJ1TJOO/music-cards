@@ -16,6 +16,9 @@ const config: Config = {
 			colors: {
 				green: "#47eb4d",
 			},
+			fontFamily: {
+				"montserrat-alternates": ["var(--font-montserrat-alternates)"],
+			},
 		},
 	},
 	plugins: [],

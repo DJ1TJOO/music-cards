@@ -37,13 +37,14 @@ export default async function Playlist({
 	return (
 		<div className="flex flex-col items-center gap-8 max-w-xs w-full">
 			<Print tracks={tracks} style={style} light={light} />
-
-			<p className="text-xs font-semibold text-center">
+			<p className="text-white w-full bg-black rounded-3xl p-4 max-w-sm text-center">
 				Preview how the cards will look, click print when you are happy
-				with the result. <br />
-				<br />
+				with the result.
+			</p>
+			<p className="text-xs font-semibold text-center">
 				Click to see year, name and artist
 			</p>
+
 			{tracks.map((track, i) => (
 				<Track
 					key={i}
