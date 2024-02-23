@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 
 export default function TrackCardFront({
@@ -16,7 +15,7 @@ export default function TrackCardFront({
 				light ? "bg-white" : "bg-black"
 			} ${pattern} flex items-center justify-center`}
 		>
-			<Image src={qrDataUrl} width={100} height={100} alt="QR Code" />
+			<img src={qrDataUrl} width={100} height={100} alt="QR Code" />
 		</div>
 	);
 }
