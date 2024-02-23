@@ -14,7 +14,7 @@ export default async function Home({
 
 	if (!(await ensureDevice(accessToken))) {
 		return (
-			<main className="w-full h-screen flex items-center py-32 px-4 flex-col gap-4">
+			<main className="w-full min-h-screen flex items-center py-32 px-4 flex-col gap-4">
 				<h1 className="uppdercase text-3xl text-green">Music Cards</h1>
 				<p className="text-white w-full bg-black rounded-3xl p-4 max-w-sm text-center">
 					Could not find any active devices, please activate an device
@@ -33,7 +33,7 @@ export default async function Home({
 		searchParams.light === "true";
 
 	return (
-		<main className="w-full h-screen flex items-center pb-32 pt-16 px-4 flex-col gap-8">
+		<main className="w-full min-h-screen flex items-center pb-32 pt-16 px-4 flex-col gap-8">
 			<h1 className="uppercase text-center text-black mb-16 text-5xl font-black font-montserrat-alternates">
 				Music Cards
 			</h1>
