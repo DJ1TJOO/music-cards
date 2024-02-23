@@ -6,15 +6,6 @@ import domToImage from "dom-to-image";
 import jsPDF from "jspdf";
 import React from "react";
 
-function downloadURI(uri: string, name: string) {
-	var link = document.createElement("a");
-	link.download = name;
-	link.href = uri;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
-}
-
 export default function Print({
 	tracks,
 	pattern,
@@ -46,7 +37,6 @@ export default function Print({
 				},
 			})
 			.then((imgData) => {
-				downloadURI(imgData, "music-cards.png");
 				const pdf = new jsPDF({
 					unit: "px",
 					format: "a4",
