@@ -37,6 +37,14 @@ export default function Print({
 				},
 			})
 			.then((imgData) => {
+				if (window) {
+					var image = new Image();
+					image.src = imgData;
+
+					var w = window.open("");
+					if (w) w.document.write(image.outerHTML);
+				}
+
 				const pdf = new jsPDF({
 					unit: "px",
 					format: "a4",
