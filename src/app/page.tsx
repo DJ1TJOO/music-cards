@@ -23,6 +23,12 @@ export default async function Home({
 					by opening/playing in the spotify app or web player.
 				</p>
 				<RefreshButton />
+				<Link
+					href={"/generate"}
+					className="rounded-full w-full px-4 py-2 font-semibold uppercase bg-green text-center"
+				>
+					generate
+				</Link>
 			</main>
 		);
 	}
