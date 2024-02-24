@@ -4,7 +4,7 @@ import TrackCardBack from "@/app/_components/TrackCardBack";
 import TrackCardFront from "@/app/_components/TrackCardFront";
 import domToImage from "dom-to-image";
 import jsPDF from "jspdf";
-import React from "react";
+import React, { useState } from "react";
 
 export default function Print({
 	tracks,
@@ -21,13 +21,17 @@ export default function Print({
 	light: boolean;
 	pattern: "wave" | "checkered";
 }) {
-	const printDocument = () => {
+	const [pdf, setPdf] = useState<jsPDF | null>(null);
+
+	const generateDocument = async () => {
 		const input = document.getElementById("divToPrint");
-		if (!input)
-			return console.error("No element with id 'divToPrint' found");
+		if (!input) {
+			console.error("No element with id 'divToPrint' found");
+			return null;
+		}
 
 		const bounds = input.getBoundingClientRect();
-		domToImage
+		return domToImage
 			.toPng(input, {
 				width: bounds.width * 2,
 				height: bounds.height * 2,
@@ -69,11 +73,29 @@ export default function Print({
 					heightLeft -= pageHeight;
 				}
 
-				pdf.save("music-cards.pdf");
+				return pdf;
 			});
 	};
+
+	const printDocument = () => {
+		if (!pdf) {
+			return generateDocument().then((pdf) => {
+				setPdf(pdf);
+				if (pdf) pdf.save("music-cards.pdf");
+			});
+		}
+
+		pdf.save("music-cards.pdf");
+	};
+
 	return (
-		<div className="flex flex-col max-w-xs w-full">
+		<div
+			className="flex flex-col max-w-xs w-full"
+			onMouseMove={async () => {
+				if (pdf) return;
+				setPdf(await generateDocument());
+			}}
+		>
 			<button
 				className="rounded-full px-4 py-2 font-semibold uppercase bg-green"
 				onClick={printDocument}
