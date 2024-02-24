@@ -94,12 +94,6 @@ export default function TrackValues({
 						Array.from(searchParams.entries())
 					);
 
-					console.log(
-						updatedName === name,
-						updatedYear === year,
-						arraysEqual(updatedArtistNames, artistNames)
-					);
-
 					const patch = {
 						...(updatedName !== name ? { name: updatedName } : {}),
 						...(updatedYear !== year ? { year: updatedYear } : {}),
