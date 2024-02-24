@@ -22,17 +22,12 @@ export default function Print({
 	pattern: "wave" | "checkered";
 }) {
 	const [isGenerating, setIsGenerating] = useState(false);
-	const [pdf, setPdf] = useState<jsPDF | null>(null);
 
 	const generateDocument = async () => {
-		if (isGenerating) return;
-
-		setIsGenerating(true);
 		const input = document.getElementById("divToPrint");
 		if (!input) {
-			setIsGenerating(false);
 			console.error("No element with id 'divToPrint' found");
-			return;
+			return null;
 		}
 
 		const bounds = input.getBoundingClientRect();
@@ -78,37 +73,30 @@ export default function Print({
 					heightLeft -= pageHeight;
 				}
 
-				setIsGenerating(false);
 				return pdf;
 			});
 	};
 
-	const printDocument = () => {
+	const printDocument = async () => {
+		setIsGenerating(true);
+		const pdf = await generateDocument();
 		if (!pdf) {
-			return generateDocument().then((pdf) => {
-				if (!pdf) return;
-
-				setPdf(pdf);
-				pdf.save("music-cards.pdf");
-			});
+			setIsGenerating(false);
+			return;
 		}
 
+		setIsGenerating(false);
 		pdf.save("music-cards.pdf");
 	};
 
 	return (
-		<div
-			className="flex flex-col max-w-xs w-full"
-			onMouseMove={async () => {
-				const pdf = await generateDocument();
-				if (pdf) setPdf(pdf);
-			}}
-		>
+		<div className="flex flex-col max-w-xs w-full">
 			<button
 				className="rounded-full px-4 py-2 font-semibold uppercase bg-green"
 				onClick={printDocument}
+				disabled={isGenerating}
 			>
-				Print
+				{isGenerating ? "Generating..." : "Print"}
 			</button>
 			<div className="absolute -translate-x-[200%] -translate-y-[200%] ">
 				<div id="divToPrint" className="w-[595px] flex flex-col gap-0">
