@@ -1,5 +1,6 @@
 "use client";
 import { formatURI, parse } from "@/spotify-uri";
+import { SpotifyTypes } from "@/spotify-uri/types-enum";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
@@ -29,7 +30,7 @@ export default function TrackListInput() {
 						? "text-green ring-green"
 						: "text-red-500 ring-red-500"
 				}`}
-				placeholder="Enter a spotify playlist URL"
+				placeholder="Enter a spotify playlist or album URL"
 				value={listUrl}
 				onChange={(e) => {
 					if (invalid === "url") setInvalid(null);
@@ -75,10 +76,10 @@ export default function TrackListInput() {
 			<button
 				onClick={() => {
 					try {
-						const parsedPlaylist = parse(listUrl);
+						const parsedList = parse(listUrl);
 						if (
-							parsedPlaylist.type !== "playlist" &&
-							parsedPlaylist.type !== "album"
+							parsedList.type !== SpotifyTypes.Playlist &&
+							parsedList.type !== SpotifyTypes.Album
 						) {
 							// For now we only support playlist and album URLs
 							throw new Error("url");
@@ -94,7 +95,7 @@ export default function TrackListInput() {
 
 						router.push(
 							`/generate?listUrl=${formatURI(
-								parsedPlaylist
+								parsedList
 							)}&pattern=${pattern}&light=${mode === "light"}`
 						);
 					} catch (error) {

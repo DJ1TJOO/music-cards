@@ -1,7 +1,6 @@
 import React from "react";
 import TrackListInput from "./_components/TrackListInput";
 import TrackList from "./_components/TrackList";
-import Print from "./_components/Print";
 import Link from "next/link";
 
 export default async function Generate({
@@ -10,7 +9,7 @@ export default async function Generate({
 	searchParams?: { [key: string]: string | string[] | undefined };
 }) {
 	const listUrl = searchParams?.listUrl;
-	const hasPlaylist = typeof listUrl === "string";
+	const hasList = typeof listUrl === "string";
 	const seed = searchParams?.seed;
 	const hasSeed = typeof seed === "string";
 
@@ -23,7 +22,7 @@ export default async function Generate({
 				Back
 			</Link>
 			<TrackListInput />
-			{hasPlaylist && hasSeed ? (
+			{hasList && hasSeed ? (
 				<TrackList
 					listUrl={listUrl}
 					seed={seed}

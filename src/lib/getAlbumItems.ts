@@ -21,7 +21,7 @@ async function getAlbumItems(
 
 	while (album.total > album.items.length) {
 		const response = await fetch(
-			`https://api.spotify.com/v1/playlists/${albumId}/tracks?limit=50&offset=${album.items.length}`,
+			`https://api.spotify.com/v1/albums/${albumId}/tracks?limit=50&offset=${album.items.length}`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
