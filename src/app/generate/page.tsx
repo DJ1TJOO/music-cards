@@ -12,6 +12,8 @@ export default async function Generate({
 	const hasList = typeof listUrl === "string";
 	const seed = searchParams?.seed;
 	const hasSeed = typeof seed === "string";
+	const patches = searchParams?.patches;
+	const hasPatches = typeof patches === "string";
 
 	return (
 		<main className="w-full flex items-center pb-32 pt-8 px-4 flex-col gap-2">
@@ -42,6 +44,7 @@ export default async function Generate({
 						typeof searchParams?.light !== "undefined" &&
 						searchParams.light === "true"
 					}
+					patches={hasPatches ? patches : null}
 				/>
 			) : null}
 		</main>

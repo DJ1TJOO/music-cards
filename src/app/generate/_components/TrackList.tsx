@@ -9,6 +9,7 @@ import { SpotifyTypes } from "@/spotify-uri/types-enum";
 import getAlbumItems from "@/lib/getAlbumItems";
 import { Album, SimplyfiedTrack } from "@/lib/spotify-types";
 import getAlbum from "@/lib/getAlbum";
+import { decompress } from "compress-json";
 
 async function getTrackList(
 	accessToken: string,
@@ -54,13 +55,25 @@ export default async function TrackList({
 	pattern,
 	light,
 	seed,
+	patches: patchesString,
 }: {
 	listUrl: string;
 	showing: string | null;
 	pattern: "wave" | "checkered";
 	light: boolean;
 	seed: string;
+	patches: string | null;
 }) {
+	const patches = patchesString
+		? (decompress(JSON.parse(patchesString)) as {
+				[key: string]: {
+					name?: string;
+					year?: number;
+					artistNames?: string[];
+				};
+		  })
+		: null;
+
 	const random = seedrandom(seed);
 	const accessToken = await getAccessToken();
 
@@ -72,9 +85,13 @@ export default async function TrackList({
 					.sort(() => 0.5 - random()) // This is pseudo-random, but fine for this use case
 					.map(async (track) => ({
 						uri: track.uri,
-						name: track.name,
-						artistNames: track.artists.map((artist) => artist.name),
-						year: new Date(track.album.release_date).getFullYear(),
+						name: patches?.[track.uri]?.name ?? track.name,
+						artistNames:
+							patches?.[track.uri]?.artistNames ??
+							track.artists.map((artist) => artist.name),
+						year:
+							patches?.[track.uri]?.year ??
+							new Date(track.album.release_date).getFullYear(),
 						qrDataUrl: await generateQRCode(track.uri, light),
 					}))
 		  )
