@@ -3,12 +3,10 @@ import { formatURI, parse } from "@/spotify-uri";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
-export default function PlaylistInput() {
+export default function TrackListInput() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const [playlistURL, setPlaylistURL] = useState(
-		searchParams.get("playlistUrl") ?? ""
-	);
+	const [listUrl, setListUrl] = useState(searchParams.get("listUrl") ?? "");
 	const [pattern, setPattern] = useState(
 		searchParams.get("pattern") ?? "select"
 	);
@@ -32,10 +30,10 @@ export default function PlaylistInput() {
 						: "text-red-500 ring-red-500"
 				}`}
 				placeholder="Enter a spotify playlist URL"
-				value={playlistURL}
+				value={listUrl}
 				onChange={(e) => {
 					if (invalid === "url") setInvalid(null);
-					setPlaylistURL(e.target.value);
+					setListUrl(e.target.value);
 				}}
 			/>
 			<select
@@ -77,9 +75,12 @@ export default function PlaylistInput() {
 			<button
 				onClick={() => {
 					try {
-						const parsedPlaylist = parse(playlistURL);
-						if (parsedPlaylist.type !== "playlist") {
-							// For now we only support playlist URLs
+						const parsedPlaylist = parse(listUrl);
+						if (
+							parsedPlaylist.type !== "playlist" &&
+							parsedPlaylist.type !== "album"
+						) {
+							// For now we only support playlist and album URLs
 							throw new Error("url");
 						}
 
@@ -92,7 +93,7 @@ export default function PlaylistInput() {
 						}
 
 						router.push(
-							`/generate?playlistUrl=${formatURI(
+							`/generate?listUrl=${formatURI(
 								parsedPlaylist
 							)}&pattern=${pattern}&light=${mode === "light"}`
 						);

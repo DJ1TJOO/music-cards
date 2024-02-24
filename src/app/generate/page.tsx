@@ -1,6 +1,6 @@
 import React from "react";
-import PlaylistInput from "./_components/PlaylistInput";
-import Playlist from "./_components/Playlist";
+import TrackListInput from "./_components/TrackListInput";
+import TrackList from "./_components/TrackList";
 import Print from "./_components/Print";
 import Link from "next/link";
 
@@ -9,8 +9,8 @@ export default async function Generate({
 }: {
 	searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-	const playlistUrl = searchParams?.playlistUrl;
-	const hasPlaylist = typeof playlistUrl === "string";
+	const listUrl = searchParams?.listUrl;
+	const hasPlaylist = typeof listUrl === "string";
 	const seed = searchParams?.seed;
 	const hasSeed = typeof seed === "string";
 
@@ -22,10 +22,10 @@ export default async function Generate({
 			>
 				Back
 			</Link>
-			<PlaylistInput />
+			<TrackListInput />
 			{hasPlaylist && hasSeed ? (
-				<Playlist
-					playlistUrl={playlistUrl}
+				<TrackList
+					listUrl={listUrl}
 					seed={seed}
 					showing={
 						typeof searchParams?.showing === "string"
