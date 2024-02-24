@@ -21,13 +21,18 @@ export default function Print({
 	light: boolean;
 	pattern: "wave" | "checkered";
 }) {
+	const [isGenerating, setIsGenerating] = useState(false);
 	const [pdf, setPdf] = useState<jsPDF | null>(null);
 
 	const generateDocument = async () => {
+		if (isGenerating) return;
+
+		setIsGenerating(true);
 		const input = document.getElementById("divToPrint");
 		if (!input) {
+			setIsGenerating(false);
 			console.error("No element with id 'divToPrint' found");
-			return null;
+			return;
 		}
 
 		const bounds = input.getBoundingClientRect();
@@ -73,6 +78,7 @@ export default function Print({
 					heightLeft -= pageHeight;
 				}
 
+				setIsGenerating(false);
 				return pdf;
 			});
 	};
@@ -80,8 +86,10 @@ export default function Print({
 	const printDocument = () => {
 		if (!pdf) {
 			return generateDocument().then((pdf) => {
+				if (!pdf) return;
+
 				setPdf(pdf);
-				if (pdf) pdf.save("music-cards.pdf");
+				pdf.save("music-cards.pdf");
 			});
 		}
 
@@ -92,8 +100,8 @@ export default function Print({
 		<div
 			className="flex flex-col max-w-xs w-full"
 			onMouseMove={async () => {
-				if (pdf) return;
-				setPdf(await generateDocument());
+				const pdf = await generateDocument();
+				if (pdf) setPdf(pdf);
 			}}
 		>
 			<button
