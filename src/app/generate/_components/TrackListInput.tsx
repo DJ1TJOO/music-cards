@@ -19,6 +19,7 @@ export default function TrackListInput() {
 			: "select"
 	);
 
+	const [copied, setCopied] = useState(false);
 	const [invalid, setInvalid] = useState<string | null>(null);
 
 	return (
@@ -108,6 +109,35 @@ export default function TrackListInput() {
 			>
 				generate
 			</button>
+			{searchParams.has("listUrl") ? (
+				<button
+					onClick={() => {
+						try {
+							navigator.clipboard.writeText(window.location.href);
+							setCopied(true);
+							setTimeout(() => {
+								setCopied(false);
+							}, 1000);
+						} catch (error) {}
+					}}
+					className="mt-6 rounded-full relative px-4 py-2 font-semibold uppercase bg-green"
+				>
+					<span
+						className={`transition-opacity absolute ${
+							copied ? "opacity-1" : "opacity-0"
+						}`}
+					>
+						copied
+					</span>
+					<span
+						className={`transition-opacity ${
+							!copied ? "opacity-1" : "opacity-0"
+						}`}
+					>
+						share
+					</span>
+				</button>
+			) : null}
 		</div>
 	);
 }
