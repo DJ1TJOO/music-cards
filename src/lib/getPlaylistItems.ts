@@ -14,6 +14,7 @@ async function getPlaylistItems(
 	);
 
 	if (!response.ok) {
+		console.log(response.status);
 		throw new Error("Failed to fetch playlist items");
 	}
 
@@ -30,6 +31,7 @@ async function getPlaylistItems(
 		);
 
 		if (!response.ok) {
+			console.log(response.status);
 			throw new Error("Failed to fetch playlist items");
 		}
 
