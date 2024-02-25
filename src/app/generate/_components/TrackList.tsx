@@ -10,6 +10,7 @@ import getAlbumItems from "@/lib/getAlbumItems";
 import { Album, SimplyfiedTrack } from "@/lib/spotify-types";
 import getAlbum from "@/lib/getAlbum";
 import { decompress } from "compress-json";
+import RefreshButton from "@/app/_components/RefreshButton";
 
 async function getTrackList(
 	accessToken: string,
@@ -25,25 +26,31 @@ async function getTrackList(
 } | null> {
 	const parsedList = parse(listUrl);
 
-	if (parsedList.type === SpotifyTypes.Playlist) {
-		const playListItems = await getPlaylistItems(
-			accessToken,
-			parsedList.id
-		);
+	try {
+		if (parsedList.type === SpotifyTypes.Playlist) {
+			const playListItems = await getPlaylistItems(
+				accessToken,
+				parsedList.id
+			);
 
-		return {
-			...playListItems,
-			items: playListItems.items.map((item) => item.track),
-		};
-	}
+			return {
+				...playListItems,
+				items: playListItems.items.map((item) => item.track),
+			};
+		}
 
-	if (parsedList.type === SpotifyTypes.Album) {
-		const album = await getAlbum(accessToken, parsedList.id);
-		const albumItems = await getAlbumItems(accessToken, parsedList.id);
-		return {
-			...albumItems,
-			items: albumItems.items.map((item) => ({ ...item, album })),
-		};
+		if (parsedList.type === SpotifyTypes.Album) {
+			const album = await getAlbum(accessToken, parsedList.id);
+			const albumItems = await getAlbumItems(accessToken, parsedList.id);
+			return {
+				...albumItems,
+				items: albumItems.items.map((item) => ({ ...item, album })),
+			};
+		}
+	} catch (error) {
+		console.log(error);
+
+		return null;
 	}
 
 	return null;
@@ -78,6 +85,16 @@ export default async function TrackList({
 	const accessToken = await getAccessToken();
 
 	const list = await getTrackList(accessToken, listUrl);
+	if (!list) {
+		return (
+			<div className="w-full max-w-xs flex flex-col gap-2 mt-8">
+				<p className="text-white w-full bg-black rounded-3xl p-4 max-w-sm text-center">
+					Failed to fetch list items
+				</p>
+				<RefreshButton />
+			</div>
+		);
+	}
 
 	const tracks = list
 		? await Promise.all(
