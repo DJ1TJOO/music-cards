@@ -39,9 +39,9 @@ export async function GET(request: NextRequest) {
 
 	const { access_token, expires_in } = await getToken.json();
 
-	const url = new URL(to ?? "/");
-	request.nextUrl.pathname = url.pathname;
-	request.nextUrl.search = url.search;
+	const url = to ? new URL(to) : null;
+	request.nextUrl.pathname = url?.pathname ?? "/";
+	request.nextUrl.search = url?.search ?? "";
 
 	const response = NextResponse.redirect(request.nextUrl);
 
