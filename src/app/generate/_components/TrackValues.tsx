@@ -15,8 +15,15 @@ function arraysEqual(a: string[], b: string[]) {
 }
 
 export default function TrackValues({
+	originalTrack,
+	updateTrack,
 	track: { uri, name, artistNames, year },
 }: {
+	originalTrack: {
+		name: string;
+		artistNames: string[];
+		year: number;
+	};
 	track: {
 		uri: string;
 		name: string;
@@ -24,6 +31,10 @@ export default function TrackValues({
 		year: number;
 		qrDataUrl: string;
 	};
+	updateTrack: (
+		uri: string,
+		track: { name?: string; artistNames?: string[]; year?: number }
+	) => void;
 }) {
 	const [updatedName, setName] = useState(name);
 	const [updatedYear, setYear] = useState(year);
@@ -94,7 +105,7 @@ export default function TrackValues({
 						Array.from(searchParams.entries())
 					);
 
-					const patch = {
+					const patchTracks = {
 						...(updatedName !== name ? { name: updatedName } : {}),
 						...(updatedYear !== year ? { year: updatedYear } : {}),
 						...(!arraysEqual(updatedArtistNames, artistNames)
@@ -104,7 +115,26 @@ export default function TrackValues({
 							: {}),
 					};
 
-					const isPatching = Object.keys(patch).length > 0;
+					updateTrack(uri, patchTracks);
+
+					const patchUrl = {
+						...(updatedName !== originalTrack.name
+							? { name: updatedName }
+							: {}),
+						...(updatedYear !== originalTrack.year
+							? { year: updatedYear }
+							: {}),
+						...(!arraysEqual(
+							updatedArtistNames,
+							originalTrack.artistNames
+						)
+							? {
+									artistNames: updatedArtistNames,
+							  }
+							: {}),
+					};
+
+					const isPatching = Object.keys(patchUrl).length > 0;
 
 					if (!current.has("patches")) {
 						current.set(
@@ -113,7 +143,7 @@ export default function TrackValues({
 								compress(
 									isPatching
 										? {
-												[uri]: patch,
+												[uri]: patchUrl,
 										  }
 										: {}
 								)
@@ -123,7 +153,7 @@ export default function TrackValues({
 						const patches = decompress(
 							JSON.parse(current.get("patches")!)
 						);
-						if (isPatching) patches[uri] = patch;
+						if (isPatching) patches[uri] = patchUrl;
 						else delete patches[uri];
 
 						current.set(
@@ -135,9 +165,13 @@ export default function TrackValues({
 					const search = current.toString();
 					const query = search ? `?${search}` : "";
 
-					router.push(`${pathname}${query}`, {
-						scroll: false,
-					});
+					window.history.pushState(
+						{
+							path: `${pathname}${query}`,
+						},
+						"",
+						`${pathname}${query}`
+					);
 				}}
 				className="rounded-full w-full px-4 py-2 font-semibold uppercase bg-green"
 			>

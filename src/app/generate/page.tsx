@@ -28,11 +28,6 @@ export default async function Generate({
 				<TrackList
 					listUrl={listUrl}
 					seed={seed}
-					showing={
-						typeof searchParams?.showing === "string"
-							? searchParams.showing
-							: null
-					}
 					pattern={
 						searchParams?.pattern === "wave"
 							? "wave"

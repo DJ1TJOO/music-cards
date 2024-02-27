@@ -1,15 +1,21 @@
+"use client";
 import TrackCardBack from "@/app/_components/TrackCardBack";
 import TrackCardFront from "@/app/_components/TrackCardFront";
-import React from "react";
-import TrackButton from "./TrackButton";
+import React, { useState } from "react";
 import TrackValues from "./TrackValues";
 
 export default function Track({
+	originalTrack,
 	track: { uri, name, artistNames, year, qrDataUrl },
 	pattern,
 	light,
-	show,
+	updateTrack,
 }: {
+	originalTrack: {
+		name: string;
+		artistNames: string[];
+		year: number;
+	};
 	track: {
 		uri: string;
 		name: string;
@@ -19,12 +25,21 @@ export default function Track({
 	};
 	pattern: "wave" | "checkered";
 	light: boolean;
-	show: boolean;
+	updateTrack: (
+		uri: string,
+		track: {
+			name?: string;
+			artistNames?: string[];
+			year?: number;
+		}
+	) => void;
 }) {
+	const [show, setShow] = useState(false);
+
 	return (
 		<div className="flex flex-col gap-1 items-center">
-			<TrackButton uri={uri} show={show}>
-				<div className="flex gap-2 h-56">
+			<button onClick={() => setShow((prev) => !prev)}>
+				<div className="flex gap-2 h-56 w-full">
 					{show ? (
 						<TrackCardBack
 							name={name}
@@ -40,10 +55,12 @@ export default function Track({
 						/>
 					)}
 				</div>
-			</TrackButton>
+			</button>
 			{show && (
 				<TrackValues
+					originalTrack={originalTrack}
 					track={{ uri, name, artistNames, year, qrDataUrl }}
+					updateTrack={updateTrack}
 				/>
 			)}
 		</div>

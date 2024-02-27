@@ -11,6 +11,7 @@ import { Album, SimplyfiedTrack } from "@/lib/spotify-types";
 import getAlbum from "@/lib/getAlbum";
 import { decompress } from "compress-json";
 import RefreshButton from "@/app/_components/RefreshButton";
+import TrackListClient from "./TrackListClient";
 
 async function getTrackList(
 	accessToken: string,
@@ -58,14 +59,12 @@ async function getTrackList(
 
 export default async function TrackList({
 	listUrl,
-	showing,
 	pattern,
 	light,
 	seed,
 	patches: patchesString,
 }: {
 	listUrl: string;
-	showing: string | null;
 	pattern: "wave" | "checkered";
 	light: boolean;
 	seed: string;
@@ -102,13 +101,9 @@ export default async function TrackList({
 					.sort(() => 0.5 - random()) // This is pseudo-random, but fine for this use case
 					.map(async (track) => ({
 						uri: track.uri,
-						name: patches?.[track.uri]?.name ?? track.name,
-						artistNames:
-							patches?.[track.uri]?.artistNames ??
-							track.artists.map((artist) => artist.name),
-						year:
-							patches?.[track.uri]?.year ??
-							new Date(track.album.release_date).getFullYear(),
+						name: track.name,
+						artistNames: track.artists.map((artist) => artist.name),
+						year: new Date(track.album.release_date).getFullYear(),
 						qrDataUrl: await generateQRCode(track.uri, light),
 					}))
 		  )
@@ -116,24 +111,7 @@ export default async function TrackList({
 
 	return (
 		<div className="flex flex-col items-center gap-8 max-w-xs w-full">
-			<Print tracks={tracks} pattern={pattern} light={light} />
-			<p className="text-white w-full bg-black rounded-3xl p-4 max-w-sm text-center">
-				Preview how the cards will look, click print when you are happy
-				with the result.
-			</p>
-			<p className="text-xs font-semibold text-center">
-				Click to see year, name and artist
-			</p>
-
-			{tracks.map((track, i) => (
-				<Track
-					key={i}
-					track={track}
-					pattern={pattern}
-					light={light}
-					show={track.uri === showing}
-				/>
-			))}
+			<TrackListClient tracks={tracks} pattern={pattern} light={light} />
 		</div>
 	);
 }
