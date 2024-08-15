@@ -1,16 +1,14 @@
-import getAccessToken from "@/lib/getAccessToken";
-import getPlaylistItems from "@/lib/getPlaylistItems";
-import { parse } from "@/spotify-uri";
-import Track from "./Track";
-import seedrandom from "seedrandom";
-import Print from "./Print";
-import { generateQRCode } from "@/lib/generateQRCode";
-import { SpotifyTypes } from "@/spotify-uri/types-enum";
-import getAlbumItems from "@/lib/getAlbumItems";
-import { Album, SimplyfiedTrack } from "@/lib/spotify-types";
-import getAlbum from "@/lib/getAlbum";
-import { decompress } from "compress-json";
 import RefreshButton from "@/app/_components/RefreshButton";
+import { generateQRCode } from "@/lib/generateQRCode";
+import getAccessToken from "@/lib/getAccessToken";
+import getAlbum from "@/lib/getAlbum";
+import getAlbumItems from "@/lib/getAlbumItems";
+import getPlaylistItems from "@/lib/getPlaylistItems";
+import { Album, SimplyfiedTrack } from "@/lib/spotify-types";
+import { parse } from "@/spotify-uri";
+import { SpotifyTypes } from "@/spotify-uri/types-enum";
+import { decompress } from "compress-json";
+import seedrandom from "seedrandom";
 import TrackListClient from "./TrackListClient";
 
 async function getTrackList(
@@ -36,7 +34,9 @@ async function getTrackList(
 
 			return {
 				...playListItems,
-				items: playListItems.items.map((item) => item.track),
+				items: playListItems.items
+					.map((item) => item.track)
+					.filter(Boolean),
 			};
 		}
 
@@ -45,7 +45,9 @@ async function getTrackList(
 			const albumItems = await getAlbumItems(accessToken, parsedList.id);
 			return {
 				...albumItems,
-				items: albumItems.items.map((item) => ({ ...item, album })),
+				items: albumItems.items
+					.map((item) => ({ ...item, album }))
+					.filter(Boolean),
 			};
 		}
 	} catch (error) {
@@ -94,6 +96,8 @@ export default async function TrackList({
 			</div>
 		);
 	}
+
+	console.log(list.items.filter((item) => !item));
 
 	const tracks = list
 		? await Promise.all(
