@@ -97,8 +97,6 @@ export default async function TrackList({
 		);
 	}
 
-	console.log(list.items.filter((item) => !item));
-
 	const tracks = list
 		? await Promise.all(
 				list.items
